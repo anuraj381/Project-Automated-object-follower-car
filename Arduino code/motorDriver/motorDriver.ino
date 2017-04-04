@@ -1,5 +1,5 @@
-int pinRight = 10;
-int pinLeft = 11;
+int pinRight = 12;
+int pinLeft = 13;
 int incomingByte = 0;   // for incoming serial data
 
 void setup() {
@@ -19,24 +19,24 @@ if (Serial.available() > 0) {
    Serial.println(incomingByte);
 
    if(incomingByte == 'a'){
-      analogWrite(pinRight, 150);
-      analogWrite(pinLeft, 150);
+      digitalWrite(pinRight, HIGH);
+      digitalWrite(pinLeft, HIGH);
    }
    else if(incomingByte == 'r'){
-      analogWrite(pinRight, 0);
-      analogWrite(pinLeft, 150);
+      digitalWrite(pinRight, LOW);
+      digitalWrite(pinLeft, HIGH);
    }
    else if(incomingByte == 'l'){
-      analogWrite(pinRight, 150);
-      analogWrite(pinLeft, 0);
+      digitalWrite(pinRight, HIGH);
+      digitalWrite(pinLeft, LOW);
    }
    else if(incomingByte == 's'){
-      analogWrite(pinRight, 0);
-      analogWrite(pinLeft, 0);
+      digitalWrite(pinRight, LOW);
+      digitalWrite(pinLeft, LOW);
    }
    else{
-      analogWrite(pinRight, 0);
-      analogWrite(pinLeft, 0); 
+      digitalWrite(pinRight, LOW);
+      digitalWrite(pinLeft, LOW); 
    }
   }
   /*else{

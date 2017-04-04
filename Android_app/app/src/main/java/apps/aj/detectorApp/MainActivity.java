@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     void detect(){
         Imgproc.cvtColor(mRgba, hsv,Imgproc.COLOR_BGR2HSV);
-        Core.inRange(hsv, new Scalar(10,35,35), new Scalar(30,180,180), threshold);
+        Core.inRange(hsv, new Scalar(10,70,70), new Scalar(30,200,200), threshold);
 
         Imgproc.blur(threshold, threshold, new org.opencv.core.Size(3.0, 3.0));
 
@@ -195,10 +195,10 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                 circle(threshold, center, r, new Scalar(255, 0, 0), 1);
                 putText(threshold, "(" + center.x + ", " + center.y + ") , " + r, center, FONT_HERSHEY_SIMPLEX, 1, new Scalar(0, 0, 255), 1);
 
-                if (r < 80) {
+                if (r < 5000) {
 
                     mid = mRgba.cols() / 2;
-                    straigtDist = (mid * 10) / 100;
+                    straigtDist = (mid * 20) / 100;
 
                     if (center.x > (mid + straigtDist)) {
                         right();

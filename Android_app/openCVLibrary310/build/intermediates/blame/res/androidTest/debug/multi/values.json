@@ -2,5 +2,9 @@
     {
         "outputFile": "E:\\Installs\\Android\\StudioProjects\\OpenCVAsync\\openCVLibrary310\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
         "map": []
+    },
+    {
+        "outputFile": "E:\\Installs\\Android\\StudioProjects\\OpenCVAsync\\Project-Automated-object-follower-car\\Android_app\\openCVLibrary310\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "map": []
     }
 ]
