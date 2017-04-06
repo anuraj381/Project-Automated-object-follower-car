@@ -105,10 +105,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
         new ConnectBT().execute();
 
-        /*Bitmap inputImg = BitmapFactory.decodeResource(getResources(), R.drawable.dp);
-        src1 = new Mat(inputImg.getHeight(), inputImg.getWidth(), CvType.CV_8UC4);
-        Utils.bitmapToMat(inputImg, src1);*/
-
         mOpenCvCameraView = (cameraView) findViewById(R.id.camera_view_activity_java_surface_view);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
@@ -161,11 +157,14 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
         mRgba = inputFrame.rgba();
         detect();
-        return threshold;
+        return mRgba;
     }
 
+    // this is the function which is responsible for detection of a blue color ball...
     void detect(){
         Imgproc.cvtColor(mRgba, hsv,Imgproc.COLOR_BGR2HSV);
+
+        //inRange for blue color
         Core.inRange(hsv, new Scalar(10,70,70), new Scalar(30,200,200), threshold);
 
         Imgproc.blur(threshold, threshold, new org.opencv.core.Size(3.0, 3.0));
@@ -178,6 +177,8 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         Mat cannyEdges = new Mat();
         Imgproc.Canny(threshold, cannyEdges, 10, 100);*/
         Mat circles = new Mat();
+
+        //HoughCircles detects circular objects... and hence only circular blue ball is detected
         Imgproc.HoughCircles(threshold, circles, Imgproc.CV_HOUGH_GRADIENT, 2, threshold.height()/4, 200, 40, 0, 100);
 
         Log.d("tag", ""+circles.cols());
@@ -192,8 +193,8 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                 r = (int) parameters[2];
                 Point center = new Point(x, y);
                 //Drawing circles on an image
-                circle(threshold, center, r, new Scalar(255, 0, 0), 1);
-                putText(threshold, "(" + center.x + ", " + center.y + ") , " + r, center, FONT_HERSHEY_SIMPLEX, 1, new Scalar(0, 0, 255), 1);
+                circle(mRgba, center, r, new Scalar(255, 0, 0), 1);
+                putText(mRgba, "(" + center.x + ", " + center.y + ") , " + r, center, FONT_HERSHEY_SIMPLEX, 1, new Scalar(0, 0, 255), 1);
 
                 if (r < 5000) {
 
@@ -309,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         return false;
     }
 
-    ////// bluetooth connection
+    ////// bluetooth connection & navigation
 
     private class ConnectBT extends AsyncTask<Void, Void, Void>  // UI thread
     {
